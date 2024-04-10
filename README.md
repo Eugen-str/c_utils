@@ -2,11 +2,10 @@
 
 Some utilities in C that i want to have in a single, no dependency, header file.
 
-Files (complete/incomplete):
-- [ ] list.h    - proper array-lists (cpp vectors)
-- [ ] da.h - macros for easier dynamic arrays
-- [ ] hashmap.h - hash maps (python dictionary)
-- [ ] bstr.h    - better strings
+Files:
+- list.h    - proper array-lists (cpp vectors)
+- hashmap.h - hash maps (python dictionary)
+- bstr.h    - better strings
 
 
 ### Description:
