@@ -32,8 +32,10 @@ int bstr_cmp(bstr a, bstr b);
 void bstr_append(bstr *str, char chr);
 bstr bstr_until(bstr str, char end);
 void bstr_remove(bstr *str, int idx);
+void bstr_remove_n(bstr *str, int idx, int n);
 void bstr_trim_before(bstr *str, char chr);
 void bstr_trim_after(bstr *str, char chr);
+void bstr_trim(bstr *str, char chr);
 bstr bstr_split(bstr *str, char delim);
 int bstr_equal(bstr a, bstr b);
 
@@ -108,16 +110,41 @@ void bstr_remove(bstr *str, int idx){
     }
 }
 
-void bstr_trim_before(bstr *str, char chr){
-    while(str->content[0] == chr){
-        bstr_remove(str, 0);
+void bstr_remove_n(bstr *str, int idx, int n){
+    for(int i = idx; i < str->len; i++){
+        str->content[i] = str->content[i+n];
+    }
+    str->len -= n;
+    if(str->len > 0){
+        char* res = (char*)realloc(str->content, str->len);
+        BSTR_ASSERT_MSG(res != NULL, printf("Could not reallocate memory for bstr_remove\n"))
+        str->content = res;
+    } else {
+        str->content = (char*)malloc(0);
+        str->len = 0;
     }
 }
 
-void bstr_trim_after(bstr *str, char chr){
-    for(int i = str->len; str->content[i] == chr; i--){
-        bstr_remove(str, i);
+
+void bstr_trim_before(bstr *str, char chr){
+    int c = 0;
+    while(str->content[c] == chr){
+        c++;
     }
+    bstr_remove_n(str, 0, c);
+}
+
+void bstr_trim_after(bstr *str, char chr){
+    int p = str->len - 1;
+    while(str->content[p] == chr){
+        p--;
+    }
+    bstr_remove_n(str, p + 1, (str->len - p));
+}
+
+void bstr_trim(bstr *str, char chr){
+    bstr_trim_before(str, chr);
+    bstr_trim_after(str, chr);
 }
 
 bstr bstr_split(bstr *str, char delim){

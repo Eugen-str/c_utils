@@ -79,6 +79,13 @@ void bstr_test(){
     while(!(bstr_equal(split_test, bstr_empty))){
         bstr_println(bstr_split(&split_test, ' '));
     }
+
+    char *a = "    hello everyone!  ";
+    bstr trim = bstr_make(a, strlen(a));
+
+    printf(".%s.\n", trim.content);
+    bstr_trim(&trim, ' ');
+    printf(".%s.\n", trim.content);
 }
 
 int main(){
