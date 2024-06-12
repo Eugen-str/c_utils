@@ -136,11 +136,6 @@ void name ## _quicksort(name *list){                        \
     INIT_LIST_SORT(name, type)
 
 
-#define foreach(val_type, name, list_type, list, block) \
-{   int name ## _i = 0;                                 \
-    val_type name = list_type ## _get(list, 0);         \
-    for(; name ## _i < list.count -1; name ## _i++, name = list_type ## _get(list, name ## _i)) {block} block }\
-
 #define print_list(list, fmt) \
     do{ for(int i = 0; i < list.count; i++) printf(fmt, list.content[i]); }while(0)
 
